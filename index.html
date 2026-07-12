@@ -76,7 +76,6 @@
             Happy Birthday ✨
         </div>
         <h1 class="text-4xl font-extrabold text-gray-800 tracking-tight mb-1">Happy Birthday,</h1>
-        <!-- ✍️ එයාගේ නම මෙතනට ලියන්න -->
         <p class="romantic-font text-5xl text-rose-600 my-2">My Princess 👸</p>
         
         <div class="bg-rose-50/60 rounded-2xl p-4 my-4 border border-rose-100 text-left">
@@ -97,7 +96,6 @@
         </h3>
         <!-- Slide Image Container -->
         <div class="relative w-full h-64 overflow-hidden rounded-2xl border-4 border-white shadow-md bg-gray-100">
-            <!-- 💡 ඔයාලගේ ඇත්තම පින්තූර වල ලින්ක්ස් දාන්න -->
             <img id="gallery-img" class="w-full h-full object-cover transition-opacity duration-300 opacity-100" 
                  src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600" alt="Memory">
         </div>
@@ -127,15 +125,41 @@
         <!-- Inside Gift Info (Initially Hidden) -->
         <div id="gift-content" class="hidden mt-4 p-4 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl w-full transition-all duration-500 scale-95 opacity-0">
             <h4 class="text-md font-bold text-amber-700">✨ Surprise! ✨</h4>
-            <!-- 💡 ඔයා දෙන තෑග්ග මෙතන ලියන්න -->
             <p class="text-2xl font-extrabold text-gray-800 my-2 animate-pulse">A Special Date Night! 🕯️🌹</p>
-            <p class="text-xs text-gray-600">"ලෑස්ති වෙලා ඉන්න, අද හවස මගෙන් ඔයාට විශේෂ රෙස්ටුරන්ට් ඩිනර් එකක් ලැබෙනවා! 🥂"</p>
+            <p class="text-xs text-gray-600 mb-4">"ලෑස්ති වෙලා ඉන්න, අද හවස මගෙන් ඔයාට විශේෂ රෙස්ටුරන්ට් ඩිනර් එකක් ලැබෙනවා! 🥂"</p>
+            
+            <button id="to-page5-btn" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold py-2.5 px-6 rounded-full text-sm shadow-md transition-all duration-300">
+                Next 💖
+            </button>
         </div>
+    </div>
+
+    <!-- ---------------- PAGE 5: NEW END PAGE (OUR JOURNEY) ---------------- -->
+    <div id="page-5" class="page flex-col items-center justify-center glass-card rounded-3xl p-6 md:p-8 shadow-2xl max-w-md w-full text-center z-10">
+        <h3 class="romantic-font text-5xl text-rose-600 mb-4">Our Forever Journey ♾️❤️</h3>
+        
+        <!-- End Page Image -->
+        <div class="relative w-44 h-44 mx-auto mb-4">
+            <div class="absolute inset-0 bg-gradient-to-r from-rose-400 to-pink-500 rounded-full blur opacity-50"></div>
+            <!-- 📸 මෙතනට ඔයාලා දෙන්නා එකට ගත්ත ලස්සනම පින්තූරයක් දාන්න -->
+            <img class="relative w-44 h-44 rounded-full object-cover border-4 border-white mx-auto shadow-lg" 
+                 src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500" alt="Us Together">
+        </div>
+
+        <!-- Image Description Box -->
+        <div class="bg-white/50 border border-rose-100 rounded-2xl p-4 my-2 text-center shadow-sm">
+            <p class="text-gray-700 text-sm font-semibold leading-relaxed">
+                "හැමදාම මේ වගේම මගේ අතින් අල්ලන් සතුටින් ඉන්න. ඔයා මගේ ජීවිතයට ලැබුණු ලොකුම තෑග්ග. මම ඔයාට ගොඩක් ආදරෙයි මගේ මැණික! 🌹✨"
+            </p>
+        </div>
+
+        <p class="text-[10px] text-gray-400 mt-4 tracking-wider uppercase">Made with ❤️ by You</p>
     </div>
 
     <script>
         // --- PAGE SWITCHING LOGIC ---
         const bgMusic = document.getElementById('bg-music');
+        let heartInterval;
         
         function switchPage(fromPageId, toPageId) {
             const fromPage = document.getElementById(fromPageId);
@@ -144,19 +168,16 @@
             fromPage.classList.remove('active');
             setTimeout(() => {
                 toPage.classList.add('active');
-            }, 300); // Wait for transition
+            }, 300);
         }
 
         // Page 1 -> Page 2
         document.getElementById('start-btn').addEventListener('click', () => {
-            // Play Music
-            bgMusic.play().catch(err => console.log("Music auto-play blocked"));
+            bgMusic.play().catch(err => console.log("Blocked"));
             switchPage('page-1', 'page-2');
-            
-            // Trigger initial confetti burst
             setTimeout(() => {
                 confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-                setInterval(createHeart, 100); // Start heart animation
+                heartInterval = setInterval(createHeart, 120); // Start basic heart rain
             }, 500);
         });
 
@@ -168,6 +189,17 @@
         // Page 3 -> Page 4
         document.getElementById('to-page4-btn').addEventListener('click', () => {
             switchPage('page-3', 'page-4');
+        });
+
+        // Page 4 -> Page 5 (End Page)
+        document.getElementById('to-page5-btn').addEventListener('click', () => {
+            switchPage('page-4', 'page-5');
+            // Heavy Romantic Heart Showers on End Page
+            setTimeout(() => {
+                clearInterval(heartInterval);
+                heartInterval = setInterval(createHeart, 60); // Faster heart rain for background
+                confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 }, colors: ['#ff4d6d', '#ff758f', '#ffccd5'] });
+            }, 500);
         });
 
         // --- FLOATING HEARTS ANIMATION ---
@@ -183,7 +215,6 @@
         }
 
         // --- MEMORIES GALLERY LOGIC ---
-        // 💡 ඔයාලගේ Photos වල නම් පිළිවෙලින් මෙතනට දාන්න
         const images = [
             "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600",
             "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600",
