@@ -7,7 +7,6 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Canvas Confetti Library -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-complete@1.0.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
@@ -40,113 +39,181 @@
             bottom: -20px;
             animation: float 6s linear infinite;
         }
+        /* Gift Box Animation Styles */
+        .gift-container {
+            perspective: 1000px;
+        }
+        .gift-box {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            cursor: pointer;
+        }
+        .gift-box.open {
+            transform: rotateY(180deg);
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4 overflow-x-hidden relative bg-rose-50">
+<body class="min-h-screen flex flex-col items-center justify-start p-4 overflow-x-hidden relative bg-rose-50 pb-16">
 
     <!-- Background Music -->
     <audio id="bg-music" loop>
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Main Container -->
-    <div class="glass-card rounded-3xl p-6 md:p-10 shadow-2xl max-w-lg w-full text-center z-10 my-8 transition-all duration-500">
-        
-        <!-- Animated Heart Badge -->
-        <div class="inline-block bg-rose-100 text-rose-600 text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-6 shadow-sm border border-rose-200 animate-pulse">
+    <!-- Main Greeting Card -->
+    <div class="glass-card rounded-3xl p-6 md:p-10 shadow-2xl max-w-lg w-full text-center z-10 mt-8 transition-all duration-500">
+        <div class="inline-block bg-rose-100 text-rose-600 text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-6 shadow-sm border border-rose-200">
             To The Most Beautiful Girl ✨
         </div>
 
-        <!-- Photo Gallery (Main Image) -->
-        <div class="relative w-40 h-40 mx-auto mb-6">
-            <div class="absolute inset-0 bg-gradient-to-r from-rose-400 to-pink-500 rounded-full blur-md opacity-70 animate-pulse"></div>
-            <!-- 📸 මෙතනට එයාගේ ලස්සනම ෆොටෝ එකක් දාන්න -->
-            <img class="relative w-40 h-40 rounded-full object-cover border-4 border-white mx-auto shadow-lg" 
-                 src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500" 
-                 alt="My Princess">
-        </div>
-
-        <!-- Big Romantic Greeting -->
-        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 tracking-tight mb-2">
-            Happy Birthday,
-        </h1>
-        <!-- ✍️ එයාගේ නම මෙතනට ලියන්න -->
+        <!-- 1. BD WISH SECTION -->
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 tracking-tight mb-2">Happy Birthday,</h1>
         <p class="romantic-font text-6xl text-rose-600 my-2">My Princess 👸</p>
         
-        <!-- Heartfelt Message -->
-        <p class="text-gray-600 leading-relaxed my-6 text-sm md:text-base font-medium px-2">
-            "ජීවිතේ මට හමුවුණු වටිනාම සහ ලස්සනම කෙනාට සුභම සුභ උපන්දිනයක් වේවා! 💖 ඔයා මගේ ජීවිතයට ආපු දවසේ ඉඳන් හැමදේම ගොඩක් ලස්සන වුණා. හැමදාමත් ඔය විදිහටම සතුටින් මගේ ළඟින් ඉන්න. I love you so much! 🌹✨"
-        </p>
+        <div class="bg-rose-50/60 rounded-2xl p-4 my-6 border border-rose-100 text-left">
+            <p class="text-gray-700 leading-relaxed text-sm md:text-base font-medium">
+                "ජීවිතේ මට හමුවුණු වටිනාම සහ ලස්සනම කෙනාට සුභම සුභ උපන්දිනයක් වේවා! 💖 ඔයා මගේ ජීවිතයට ආපු දවසේ ඉඳන් හැමදේම ගොඩක් ලස්සන වුණා. හැමදාමත් ඔය විදිහටම සතුටින් මගේ ළඟින් ඉන්න. I love you so much, my love! 🌹✨"
+            </p>
+        </div>
 
-        <!-- Interactive Surprise Button -->
-        <button id="wish-btn" class="w-full bg-gradient-to-r from-rose-500 via-pink-500 to-rose-600 hover:from-rose-600 hover:to-pink-600 text-white font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-rose-300/50 hover:shadow-2xl transition-all duration-300 transform active:scale-95 focus:outline-none text-lg">
+        <button id="wish-btn" class="w-full bg-gradient-to-r from-rose-500 via-pink-500 to-rose-600 hover:from-rose-600 hover:to-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform active:scale-95 text-md mb-4">
             Touch My Heart ❤️
         </button>
 
-        <!-- Music Control -->
-        <button id="music-btn" class="mt-5 text-xs font-semibold text-rose-500 hover:text-rose-700 bg-rose-100/60 px-4 py-2 rounded-full transition-colors focus:outline-none inline-flex items-center gap-1">
+        <button id="music-btn" class="text-xs font-semibold text-rose-500 hover:text-rose-700 bg-rose-100/60 px-4 py-2 rounded-full transition-colors inline-flex items-center gap-1">
             <span>🎵</span> <span id="btn-text">Play Romantic Music</span>
         </button>
     </div>
 
-    <!-- Mini Image Grid (Our Memories Section) -->
-    <div class="z-10 w-full max-w-lg grid grid-cols-3 gap-3 px-2 mb-8">
-        <img class="rounded-xl shadow-md h-24 w-full object-cover border border-white" src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400" alt="Memory 1">
-        <img class="rounded-xl shadow-md h-24 w-full object-cover border border-white" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400" alt="Memory 2">
-        <img class="rounded-xl shadow-md h-24 w-full object-cover border border-white" src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400" alt="Memory 3">
+    <!-- 2. MEMORIES PHOTO GALLERY -->
+    <div class="glass-card rounded-3xl p-6 shadow-2xl max-w-lg w-full text-center z-10 mt-8">
+        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center justify-center gap-2 text-rose-600">
+            📸 Our Sweet Memories
+        </h3>
+        <!-- Main Image Slide -->
+        <div class="relative w-full h-64 overflow-hidden rounded-2xl border-4 border-white shadow-md bg-gray-100">
+            <!-- 💡 පහත src වෙනුවට ඔයාලගේ ඇත්තම පින්තූර වල ලින්ක්ස් දාන්න -->
+            <img id="gallery-img" class="w-full h-full object-cover transition-opacity duration-500 opacity-100" 
+                 src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600" alt="Memory">
+        </div>
+        <!-- Gallery Controls -->
+        <div class="flex justify-between items-center mt-4">
+            <button id="prev-btn" class="bg-rose-100 hover:bg-rose-200 text-rose-600 font-bold py-2 px-4 rounded-full text-sm transition-colors">◀ Previous</button>
+            <span id="img-index" class="text-xs font-semibold text-gray-500">Image 1 of 3</span>
+            <button id="next-btn" class="bg-rose-100 hover:bg-rose-200 text-rose-600 font-bold py-2 px-4 rounded-full text-sm transition-colors">Next ▶</button>
+        </div>
+    </div>
+
+    <!-- 3. BD GIFT BOX SECTION -->
+    <div class="glass-card rounded-3xl p-6 shadow-2xl max-w-lg w-full text-center z-10 mt-8 flex flex-col items-center">
+        <h3 class="text-xl font-bold text-gray-800 mb-2 text-rose-600">🎁 A Special Gift For You</h3>
+        <p class="text-xs text-gray-500 mb-6">Click the box to open your birthday surprise!</p>
+        
+        <div class="gift-container my-4" id="gift-trigger">
+            <!-- Simple Animated Emoji Gift Box -->
+            <div id="gift-icon" class="text-7xl cursor-pointer select-none transition-transform duration-300 hover:scale-110 animate-bounce">
+                🎁
+            </div>
+        </div>
+
+        <!-- Inside the Gift Container (Hidden until clicked) -->
+        <div id="gift-content" class="hidden mt-4 p-4 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl w-full transition-all duration-500 scale-95 opacity-0">
+            <h4 class="text-lg font-bold text-amber-700 flex items-center justify-center gap-1">✨ Surprise! ✨</h4>
+            <!-- 💡 මෙතන තියෙන Text එක ඔයා දෙන ඇත්තම තෑග්ගට අනුව වෙනස් කරන්න (eg: "Ring💍", "Teddy Bear🧸", "A Date Dinner🌹") -->
+            <p class="text-2xl font-extrabold text-gray-800 my-3 animate-pulse">A Special Date Night! 🕯️🌹</p>
+            <p class="text-xs text-gray-600">"ලෑස්ති වෙලා ඉන්න, අද හවස මගෙන් ඔයාට විශේෂ රෙස්ටුරන්ට් ඩිනර් එකක් ලැබෙනවා! 🥂"</p>
+        </div>
     </div>
 
     <script>
+        // Music & Heart Elements
         const wishBtn = document.getElementById('wish-btn');
         const musicBtn = document.getElementById('music-btn');
         const btnText = document.getElementById('btn-text');
         const bgMusic = document.getElementById('bg-music');
 
-        // Create Floating Hearts
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 3 + 's'; // 3-6s
+            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
             heart.style.fontSize = Math.random() * 20 + 15 + 'px';
             document.body.appendChild(heart);
-            
-            setTimeout(() => {
-                heart.remove();
-            }, 6000);
+            setTimeout(() => { heart.remove(); }, 6000);
         }
 
-        // Surprise Button Click
         wishBtn.addEventListener('click', () => {
-            // Heart shapes confetti colors
-            var colors = ['#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#fbb1bd'];
-            
-            // Confetti Burst
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: colors
-            });
-
-            // Continuous heart shower for 4 seconds
+            confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 }, colors: ['#ff0a54', '#ff477e', '#ff7096'] });
             const interval = setInterval(createHeart, 80);
             setTimeout(() => { clearInterval(interval); }, 4000);
         });
 
-        // Music Controls
         let isPlaying = false;
         musicBtn.addEventListener('click', () => {
             if (!isPlaying) {
-                bgMusic.play().then(() => {
-                    isPlaying = true;
-                    btnText.innerText = "Pause Music ⏸️";
-                }).catch(err => console.log("Click again to play"));
+                bgMusic.play().then(() => { isPlaying = true; btnText.innerText = "Pause Music ⏸️"; }).catch(err => console.log(err));
             } else {
-                bgMusic.pause();
-                isPlaying = false;
-                btnText.innerText = "Play Romantic Music 🎵";
+                bgMusic.pause(); isPlaying = false; btnText.innerText = "Play Romantic Music 🎵";
+            }
+        });
+
+        // --- 2. GALLERY INTERACTIVE LOGIC ---
+        // 💡 ඔයාලගේ පින්තූර 3ක් GitHub එකට දාලා ඒවායේ නම් පිළිවෙලින් මෙතන ["img1.jpg", "img2.jpg", "img3.jpg"] වගේ දෙන්න.
+        const images = [
+            "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600",
+            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600",
+            "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600"
+        ];
+        let currentImgIndex = 0;
+        const galleryImg = document.getElementById('gallery-img');
+        const imgIndexTxt = document.getElementById('img-index');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        function updateGallery() {
+            galleryImg.style.opacity = 0;
+            setTimeout(() => {
+                galleryImg.src = images[currentImgIndex];
+                imgIndexTxt.innerText = `Image ${currentImgIndex + 1} of ${images.length}`;
+                galleryImg.style.opacity = 1;
+            }, 300);
+        }
+
+        nextBtn.addEventListener('click', () => {
+            currentImgIndex = (currentImgIndex + 1) % images.length;
+            updateGallery();
+        });
+        prevBtn.addEventListener('click', () => {
+            currentImgIndex = (currentImgIndex - 1 + images.length) % images.length;
+            updateGallery();
+        });
+
+        // --- 3. GIFT BOX LOGIC ---
+        const giftTrigger = document.getElementById('gift-trigger');
+        const giftIcon = document.getElementById('gift-icon');
+        const giftContent = document.getElementById('gift-content');
+        let isGiftOpen = false;
+
+        giftTrigger.addEventListener('click', () => {
+            if (!isGiftOpen) {
+                // Change gift icon to open box/stars
+                giftIcon.innerHTML = "🔓✨";
+                giftIcon.classList.remove('animate-bounce');
+                
+                // Show Content with animation
+                giftContent.classList.remove('hidden');
+                setTimeout(() => {
+                    giftContent.classList.remove('scale-95', 'opacity-0');
+                    giftContent.classList.add('scale-100', 'opacity-100');
+                }, 50);
+
+                // Burst extra confetti for the gift opening
+                confetti({ particleCount: 80, angle: 90, spread: 60, origin: { y: 0.8 }, colors: ['#ffb703', '#fb8500'] });
+                isGiftOpen = true;
             }
         });
     </script>
